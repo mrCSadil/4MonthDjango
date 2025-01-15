@@ -1,0 +1,24 @@
+{% extends 'components/navbar.html' %}
+
+{% block content%}
+
+{% for post in posts %}
+<div class="card" style="width: 18rem; margin: 1.5%;">
+  {% if post.image %}
+  <img src="{{ post.image.url }}" class="card-img-top" alt="...">
+{% else %}
+  <img src="https://coffective.com/wp-content/uploads/2018/06/default-featured-image.png.jpg">
+{% endif %}
+  <div class="card-body">
+    <h5 class="card-title">{{post.title}}</h5>
+    <p class="card-text">{{post.content}}</p>
+    <p class="card-text">{{post.category}}</p>
+    {% for tag in post.tag.all %}
+    <p>{{tag.title}}</p>
+    {% endfor %}
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}
