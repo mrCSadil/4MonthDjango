@@ -1,0 +1,48 @@
+# Byte-compiled files
+*.pyc
+*.pyo
+__pycache__/
+*.pyd
+
+# Secret key and settings overrides
+.env
+*.env
+*.local
+
+# SQLite database files
+db.sqlite3
+*.sqlite3
+
+# Django migrations
+*/migrations/*.py
+*/migrations/*.pyc
+
+# PyCharm project files
+.idea/
+
+# Virtual environment
+venv/
+env/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+*.DS_Store
+# Static files
+/static/
+# Media files
+/media/
+# Coverage reports
+htmlcov/
+.coverage
+*.cover
+*.py,cover
+
+# Test artifacts
+*.pytest_cache
