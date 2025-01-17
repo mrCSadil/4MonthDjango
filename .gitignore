@@ -46,3 +46,6 @@ htmlcov/
 
 # Test artifacts
 *.pytest_cache
+
+code.pub/
+code also.pub/
