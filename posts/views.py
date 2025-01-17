@@ -1,13 +1,16 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .models import Post
 from posts.forms import PostCreateForm
-
+from django.contrib.auth.decorators import login_required
+def main_view(request):
+    return render(request, "components/navbar.html")
 def about_me(request):
     if request.method == 'GET':
         return HttpResponse("I am a sigma male")
     else:
         pass
 
+@login_required(login_url='/login/')
 def about_my_friend(request):
     if request.method == 'GET':
         return render(request, 'about_my_friend.html')
@@ -16,12 +19,13 @@ def post_list_view(request):
     if request.method == 'GET':
         posts = Post.objects.all()
         return render(request, 'posts/post_list.html', {'posts': posts})
-
+@login_required(login_url='/login/')
 def post_detail_view(request, id):
     if request.method == 'GET':
         post = Post.objects.get(id=id)
         return render(request, 'posts/post_detail.html', {'post': post})
 
+@login_required(login_url='/login/')
 def post_create_view(request):
     if request.method == 'GET':
         form = PostCreateForm()

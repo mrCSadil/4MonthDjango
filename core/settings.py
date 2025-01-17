@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "posts",
+    "user",
 ]
 
 MIDDLEWARE = [
@@ -102,6 +103,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+JAZZMIN_UI_TWEAKS = {
+    "theme": "slate",
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

@@ -1,0 +1,9 @@
+{% extends "components/navbar.html"%}
+{% block content %}
+
+<from action="" method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <button type="submit">Register</button>
+</from>
+{% endblock %}
