@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<from action="" method="post">
+<form action="" method="post">
     {%csrf_token%}
     {{form.as_p}}
     <button type="submit">Login</button>
-</from>
+</form>
 {% endblock %}

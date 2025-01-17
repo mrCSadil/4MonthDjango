@@ -13,11 +13,12 @@ def register_view(request):
             print("Form is not valid", form.errors)
             return render(request, 'user/register.html', {"form": form})
         elif form.is_valid():
-            User.objects.create_user(
+            user = User.objects.create_user(
                 username=form.cleaned_data['username'],
                 email = form.cleaned_data['email'],
                 password = form.cleaned_data['password'],
             )
+            login(request, user)
             print(f"User created successfully!")
             return redirect('main_view')
 
