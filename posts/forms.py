@@ -1,5 +1,7 @@
 from django import forms
 from posts.models import Post
+from posts.models import Category
+
 
 class PostCreateForm(forms.ModelForm):
 
@@ -19,3 +21,20 @@ class PostCreateForm(forms.ModelForm):
         if (title and description) and title.lower() == description.lower():
             raise forms.ValidationError('Title or description must be different')
         return cleaned_data
+
+class SearchForm(forms.Form):
+    search = forms.CharField(
+        max_length=100,
+        required=False,
+        widget = forms.TextInput(attrs={'placeholder':'Search'})
+    )
+    category = forms.ModelChoiceField(queryset= Category.objects.all(), required=False, widget = forms.Select())
+    orderings = (
+        ("created_at", "created_at"),
+        ("-created_at", "in descending created_at"),
+        ("updated_at", "updated_at"),
+        ("-updated_at", "in descending updated_at"),
+        ("rate" , "rate"),
+        ("-rate" , "in descending rate"),
+    )
+    ordering = forms.ChoiceField(choices=orderings, required=False, widget=forms.Select())
