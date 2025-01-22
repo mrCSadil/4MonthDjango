@@ -40,7 +40,7 @@ def post_list_view(request):
             max_pages = round(max_pages)
 
         start = (page -1 ) * limit
-        end = start * limit
+        end = start + limit
 
         posts = posts[start:end]
 
