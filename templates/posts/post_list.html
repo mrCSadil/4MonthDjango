@@ -18,7 +18,7 @@
     {% for tag in post.tag.all %}
     <p>{{tag.title}}</p>
     {% endfor %}
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <a href="/posts/{{post.id}}" class="btn btn-primary">Detail post</a>
   </div>
 </div>
 {% endfor %}

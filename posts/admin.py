@@ -5,8 +5,8 @@ from .models import Post, Category,Tag
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'content', 'category', 'created_at', 'rate']
-    list_filter = ['category', 'tag']
+    list_display = ['title', 'content', 'category', "author", 'created_at', 'rate']
+    list_filter = ['category', 'tag', 'author']
     search_fields = ['title', 'content', "tags__name"]
     list_editable = ['rate']
 

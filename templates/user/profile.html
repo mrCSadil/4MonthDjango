@@ -1,0 +1,40 @@
+{% extends "components/navbar.html"%}
+
+{% block content %}
+
+
+<h1 class = "mt-5" style ="text-align:center;">
+    Profile
+</h1>
+
+<div class ="container" >
+    <img src="/media/{{ user.profile.image }}" alt="Profile Picture" style="width: 200px; height: 200px; border-radius: 50%;">
+    <h2>{{ user.username }}</h2>
+    <h3>{{ user.first_name }}</h3>
+    <h3>{{ user.last_name}}</h3>
+    <h3>{{ user.email}}</h3>
+    <h3>{{ user.profile.age }}</h3>
+</div>
+    <p>My posts</p>
+
+    {% for post in posts %}
+<div class="card" style="width: 18rem; margin: 1.5%;">
+  {% if post.image %}
+  <img src="{{ post.image.url }}" class="card-img-top" alt="...">
+  {% else %}
+  <img src="https://coffective.com/wp-content/uploads/2018/06/default-featured-image.png.jpg">
+  {% endif %}
+  <div class="card-body">
+    <h5 class="card-title">{{post.title}}</h5>
+    <p class="card-text">{{post.content}}</p>
+    <p class="card-text">{{post.category}}</p>
+    {% for tag in post.tag.all %}
+    <p>{{tag.title}}</p>
+    {% endfor %}
+    <a href="/posts/{{post.id}}" class="btn btn-primary">Post detail</a>
+  </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

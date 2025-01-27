@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.db.models import Q
 from .models import Post
-from posts.forms import PostCreateForm, SearchForm
+from posts.forms import PostCreateForm, SearchForm, PostUpdateForm
 from django.contrib.auth.decorators import login_required
 
 def main_view(request):
@@ -33,19 +33,18 @@ def post_list_view(request):
         if ordering:
             posts = posts.order_by(ordering)
         limit = 2
-        max_pages = posts.count()/ limit
+        max_pages = posts.count() / limit
         if round(max_pages) < max_pages:
             max_pages = round(max_pages) + 1
         else:
             max_pages = round(max_pages)
 
-        start = (page -1 ) * limit
+        start = (page - 1) * limit
         end = start + limit
-
         posts = posts[start:end]
+        context_data = {'posts': posts, "search_form": search_form, "max_pages": range(1, max_pages+1) }
+        return render(request, 'posts/post_list.html', context=context_data,)
 
-        context_data = {'posts': posts , "search_form": search_form , "max_pages": range(1, max_pages+1 ) }
-        return render(request, 'posts/post_list.html', context = context_data,)
 @login_required(login_url='/login/')
 def post_detail_view(request, id):
     if request.method == 'GET':
@@ -63,7 +62,11 @@ def post_create_view(request):
             return render (request, 'posts/post_create.html', {'form': form})
         elif form.is_valid():
 
-            form.save()
+            user = request.user
+            Post.objects.create(**form.cleaned_data, author=user)
+
+
+            # form.save()
 
             # title = form.cleaned_data.get('title')
             # content = form.cleaned_data.get('content')   juust form
@@ -71,3 +74,18 @@ def post_create_view(request):
             #
             # Post.objects.create(title=title, content=content, image=image)
             return redirect('/posts/')
+
+@login_required(login_url='/login/')
+def post_update_view(request, id):
+    post = Post.objects.get(id=id)
+    if request.method == 'GET':
+        form = PostUpdateForm(instance=post)
+        return render(request, 'posts/post_update.html', {'form': form})
+    if request.method == 'POST':
+        form = PostUpdateForm(request.POST, request.FILES, instance=post)
+        if not form.is_valid():
+            return render(request, 'posts/post_update.html', {'form': form})
+        elif form.is_valid():
+            form.save
+
+            return redirect(f'/posts/{post.id}')

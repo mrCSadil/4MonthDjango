@@ -3,11 +3,21 @@ from posts.models import Post
 from posts.models import Category
 
 
-class PostCreateForm(forms.ModelForm):
+class PostCreateForm(forms.Form):
 
-    class Meta:
-        model = Post
-        fields = ['image','title', 'content']
+    title = forms.CharField(
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': 'Title'})
+    )
+    content = forms.CharField(
+        max_length=500,
+        required=True,
+        widget=forms.Textarea(attrs={'placeholder': 'Content'})
+    )
+    image = forms.ImageField(
+        required=False,
+    )
 
 
     # image = forms.ImageField(required=False)
@@ -38,3 +48,17 @@ class SearchForm(forms.Form):
         ("-rate" , "in descending rate"),
     )
     ordering = forms.ChoiceField(choices=orderings, required=False, widget=forms.Select())
+
+class PostUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['image','title', 'content']
+
+
+    def clean(self):
+        cleaned_data = super().clean()
+        title = cleaned_data.get('title')
+        content = cleaned_data.get('content')
+        if (title and content) and title.lower() == content.lower():
+            raise forms.ValidationError('Title or description must be different')
+        return cleaned_data

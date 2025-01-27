@@ -1,0 +1,19 @@
+{% extends 'components/navbar.html' %}
+{% block content%}
+<div class="card" style="width: 18rem; margin: 1.5%;">
+  {% if post.image %}
+  <img src="{{ post.image.url }}" class="card-img-top" alt="...">
+{% else %}
+  <img src="https://coffective.com/wp-content/uploads/2018/06/default-featured-image.png.jpg">
+{% endif %}
+    <div class="card-body">
+        <h5 class="card-title">{{post.title}}</h5>
+        <p class="card-text">{{post.content}}</p>
+        <p class="card-text">{{post.rate}}</p>
+        {% if post.author == request.user %}
+        <a href ="/posts/update/{{post.id}}" class = "btn btn-primary">Update</a>
+        {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
